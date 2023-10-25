@@ -38,6 +38,9 @@ const Keptn = ({ deploy, plugin, content, detailsCallHandler }) => {
       data,
       message: 'Sequence triggered successfully'
     })
+
+    console.log(pluginHelper.createCallUrl(plugin, deploy))
+
     setStage('')
     setSequence('')
   }
