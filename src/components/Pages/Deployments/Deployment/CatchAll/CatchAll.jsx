@@ -9,6 +9,7 @@ import Loader from '../../../../UI/Loader/Loader'
 import Pipelines from './Pipelines/Pipelines'
 import Kubernetes from './Kubernetes/Kubernetes'
 import Keptn from './Keptn/Keptn'
+import ArgoEvents from './ArgoEvents/ArgoEvents'
 import Codequality from './Codequality/Codequality'
 import Capi from './Capi/Capi'
 import ErrorBoundary from '../../../../Containers/ErrorBoundary/ErrorBoundary'
@@ -117,7 +118,16 @@ const CatchAll = ({ deploy, params, plugin }) => {
             detailsCallHandler={detailsCallHandler}
           />
         )
-      case 'codequality':
+        case 'argoevents':
+          return (
+            <ArgoEvents
+              plugin={pp}
+              deploy={deploy}
+              content={plugin.data[pKey]}
+              detailsCallHandler={detailsCallHandler}
+            />
+          )
+        case 'codequality':
         return (
           <Codequality
             plugin={pp}

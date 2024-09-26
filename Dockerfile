@@ -3,6 +3,9 @@ LABEL maintainer "Krateo <contact@krateoplatformops.io>"
 
 ARG VERSION
 
+# Install Python, make, and g++ for node-gyp to work
+RUN apk add --no-cache python3 make g++ 
+
 WORKDIR /app
 COPY . ./
 RUN yarn
