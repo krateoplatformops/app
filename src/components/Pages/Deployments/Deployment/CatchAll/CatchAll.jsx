@@ -118,16 +118,16 @@ const CatchAll = ({ deploy, params, plugin }) => {
             detailsCallHandler={detailsCallHandler}
           />
         )
-        case 'argoevents':
-          return (
-            <ArgoEvents
-              plugin={pp}
-              deploy={deploy}
-              content={plugin.data[pKey]}
-              detailsCallHandler={detailsCallHandler}
-            />
-          )
-        case 'codequality':
+      case 'argoevents':
+        return (
+          <ArgoEvents
+            plugin={pp}
+            deploy={deploy}
+            content={plugin.data[pKey]}
+          detailsCallHandler={detailsCallHandler}
+          />
+        )
+      case 'codequality':
         return (
           <Codequality
             plugin={pp}
