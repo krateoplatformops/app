@@ -67,6 +67,19 @@ export const endpointUIConstants = {
       ]
     },
     {
+      type: 'argoevents',
+      category: 'delivery',
+      fields: [
+        {
+          title: 'ArgoEvents token',
+          name: 'token',
+          type: 'password',
+          description: 'ArgoEvents Bearer token',
+          required: true
+        }
+      ]
+    },
+    {
       type: 'sonarcloud',
       category: 'delivery',
       fields: [
