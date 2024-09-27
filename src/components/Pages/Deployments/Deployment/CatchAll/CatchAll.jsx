@@ -124,7 +124,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
             plugin={pp}
             deploy={deploy}
             content={plugin.data[pKey]}
-          detailsCallHandler={detailsCallHandler}
+          // detailsCallHandler={detailsCallHandler}
           />
         )
       case 'codequality':
