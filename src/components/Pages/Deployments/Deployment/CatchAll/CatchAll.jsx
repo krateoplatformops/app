@@ -31,7 +31,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
       if (key) {
         setDetailsKey(key)
       }
-      if (pKey.startsWith('terminal')) return
+      if (pKey.startsWith('terminal') || pp?.type === 'argoevents' ) return
       dispatch(
         pluginFetch({
           method: method || 'get',
