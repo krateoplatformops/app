@@ -67,7 +67,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
     console.log('deploy-log:', { deploy });
     console.log('plugin-log:', { plugin });
 
-    if (pKey.startsWith('terminal') || pp?.type === 'argoevents') return
+    if (pKey.startsWith('terminal')) return
     pKey &&
       !plugin.data[pKey] &&
       dispatch(
