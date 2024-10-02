@@ -9,17 +9,32 @@ import Label from '../../../../../UI/Label/Label'
 import { pluginHelper } from '../../../../../../helpers'
 
 const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
+
+  console.log('ArgoEvents component mounted');
+  console.log('Props:', { deploy, plugin, content, detailsCallHandler });
+
   const [stage, setStage] = useState('')
   const [version, setVersion] = useState('')
 
  
   const buttonHandler = async () => {
+
+    console.log('Button clicked');
+    console.log('Stage:', stage);
+    console.log('Version:', version);
+
     // Placeholder values for now
     const KRATEO_DEPLOYMENT_NAME = deploy.metadata.name; // Replace with actual value later
     const KRATEO_ENDPOINT_BEARER_TOKEN = process.env.KRATEO_ENDPOINT_BEARER_TOKEN; // Replace with actual token
     const KRATEO_ENDPOINT_TARGET_URL = process.env.KRATEO_ENDPOINT_TARGET_URL; // Replace with actual URL
 
+    console.log('Deployment Name:', KRATEO_DEPLOYMENT_NAME);
+    console.log('Bearer Token:', KRATEO_ENDPOINT_BEARER_TOKEN);
+    console.log('Target URL:', KRATEO_ENDPOINT_TARGET_URL);
+
     const repo_url = `https://github.insiel.it/insiel/${KRATEO_DEPLOYMENT_NAME}-cfg.git`;
+
+    console.log('Repository URL:', repo_url);
 
     // Prepare the payload for the POST request
     const data = {
@@ -29,6 +44,8 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
       version: version,     // the entered version (image or number)
       verbose: 'true'
     };
+
+    console.log('Payload Data:', data);
 
     try {
       // Make the API call using fetch or axios
@@ -60,10 +77,12 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
   };
 
   const stageChangeHandler = (e) => {
+    console.log('Stage changed:', e.target.value);
     setStage(e.target.value);
   };
 
   const versionChangeHandler = (e) => {
+    console.log('Version changed:', e.target.value);
     setVersion(e.target.value);
   };
 
@@ -92,7 +111,10 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
             <button
               type="button"
               className="primary-button"
-              onClick={buttonHandler}
+              onClick={() => {
+                console.log('Trigger Deploy button clicked');
+                buttonHandler();
+              }}
               disabled={stage === ''}
             >
               trigger deploy
