@@ -1,126 +1,80 @@
 import React, { useState } from 'react'
-import yaml from 'js-yaml'
-
 import Card from '../../../../../UI/Card/Card'
 import Follower from '../../../../../UI/Follower/Follower'
-import YamlView from '../../../../../UI/YamlView/YamlView'
 import Label from '../../../../../UI/Label/Label'
-
 import { pluginHelper } from '../../../../../../helpers'
 
-const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
-
-  console.log('ArgoEvents component mounted');
-  console.log('Props:', { deploy, plugin, content, detailsCallHandler });
-
+const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
   const [stage, setStage] = useState('')
   const [version, setVersion] = useState('')
 
- 
-  const buttonHandler = async () => {
+  const stages = ['test', 'coll', 'prod']
 
-    console.log('Button clicked');
-    console.log('Stage:', stage);
-    console.log('Version:', version);
+  const buttonHandler = () => {
+    const deploymentName = deploy.metadata.name
 
-    // Placeholder values for now
-    const KRATEO_DEPLOYMENT_NAME = deploy.metadata.name; // Replace with actual value later
-    const KRATEO_ENDPOINT_BEARER_TOKEN = process.env.KRATEO_ENDPOINT_BEARER_TOKEN; // Replace with actual token
-    const KRATEO_ENDPOINT_TARGET_URL = process.env.KRATEO_ENDPOINT_TARGET_URL; // Replace with actual URL
-
-    console.log('Deployment Name:', KRATEO_DEPLOYMENT_NAME);
-    console.log('Bearer Token:', KRATEO_ENDPOINT_BEARER_TOKEN);
-    console.log('Target URL:', KRATEO_ENDPOINT_TARGET_URL);
-
-    const repo_url = `https://github.insiel.it/insiel/${KRATEO_DEPLOYMENT_NAME}-cfg.git`;
-
-    console.log('Repository URL:', repo_url);
-
-    // Prepare the payload for the POST request
     const data = {
-      repo_url,
+      repo_url: `https://github.insiel.it/insiel/${deploymentName}-cfg.git`,
       revision: 'main',
-      env: stage,  // the selected stage (test, coll, prod)
-      version: version,     // the entered version (image or number)
+      env: stage,
+      version: version,
       verbose: 'true'
-    };
-
-    console.log('Payload Data:', data);
-
-    try {
-      // Make the API call using fetch or axios
-      const response = await fetch(KRATEO_ENDPOINT_TARGET_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${KRATEO_ENDPOINT_BEARER_TOKEN}`
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Deploy triggered successfully:', result);
-        alert('Deploy triggered successfully!');
-      } else {
-        console.error('Failed to trigger deploy:', response.statusText);
-        alert('Failed to trigger deploy. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error triggering deploy:', error);
-      alert('Error occurred while triggering deploy.');
     }
 
-    // Clear inputs after the API call
-    setStage('');
-    setVersion('');
-  };
+    detailsCallHandler({
+      url: pluginHelper.createCallUrl(plugin, deploy),
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data,
+      message: 'Argo Events sequence triggered successfully'
+    })
 
-  const stageChangeHandler = (e) => {
-    console.log('Stage changed:', e.target.value);
-    setStage(e.target.value);
-  };
-
-  const versionChangeHandler = (e) => {
-    console.log('Version changed:', e.target.value);
-    setVersion(e.target.value);
-  };
+    // Reset form
+    setStage('')
+    setVersion('')
+  }
 
   return (
     <ul className="ul-double-view">
       <li className="li-menu">
         <Follower>
-          <Card title={plugin.value}>
-            <h2 className="mt">Trigger a new deploy</h2>
-            <Label title="stage">
-              <select value={stage} onChange={(e) => stageChangeHandler(e)}>
-                <option value="">Select a stage</option>
-                <option value="test">test</option>
-                <option value="coll">coll</option>
-                <option value="prod">prod</option>
+          <Card title="Argo Events">
+            <Label title="Stage">
+              <select 
+                value={stage} 
+                onChange={(e) => setStage(e.target.value)}
+              >
+                <option value="">Select stage</option>
+                {stages.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
               </select>
             </Label>
-            <Label title="version">
+            <Label title="Version">
               <input
                 type="text"
-                placeholder="registry/imageName:imageTag"
+                placeholder="Docker image or version number"
+                value={version}
                 onChange={(e) => setVersion(e.target.value)}
-                disabled={stage === ''}
               />
             </Label>
             <button
               type="button"
               className="primary-button"
-              onClick={() => {
-                console.log('Trigger Deploy button clicked');
-                buttonHandler();
-              }}
-              disabled={stage === ''}
+              onClick={buttonHandler}
+              disabled={!stage || !version}
             >
-              trigger deploy
+              Trigger Deploy
             </button>
           </Card>
         </Follower>
+      </li>
+      <li className="li-content">
+        {/* Qui puoi aggiungere eventuali contenuti aggiuntivi se necessario */}
       </li>
     </ul>
   )

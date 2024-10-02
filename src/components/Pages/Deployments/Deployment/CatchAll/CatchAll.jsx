@@ -67,7 +67,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
     console.log('deploy-log:', { deploy });
     console.log('plugin-log:', { plugin });
 
-    if (pKey.startsWith('terminal') || pp?.type === 'argoevents') return
+    if (pKey.startsWith('terminal')) return
     pKey &&
       !plugin.data[pKey] &&
       dispatch(
@@ -98,7 +98,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
   if (
     ((!plugin.data[pKey] && plugin.loading) ||
       (!plugin.data[pKey] && !plugin.loading && !plugin.error)) &&
-    pp.type !== 'terminal' && pp.type !== 'argoevents'
+    pp.type !== 'terminal'
   ) {
 
     console.log('return Loader');
