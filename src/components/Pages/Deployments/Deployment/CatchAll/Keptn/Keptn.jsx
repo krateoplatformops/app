@@ -10,6 +10,10 @@ import StageCard from './StageCard/StageCard'
 import { pluginHelper } from '../../../../../../helpers'
 
 const Keptn = ({ deploy, plugin, content, detailsCallHandler }) => {
+
+  console.log('Keptn component mounted');
+  console.log('Props:', { deploy, plugin, content, detailsCallHandler });
+
   const [stage, setStage] = useState('')
   const [sequence, setSequence] = useState('')
   const [imageUrl, setImageUrl] = useState('')
