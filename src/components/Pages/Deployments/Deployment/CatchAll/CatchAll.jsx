@@ -32,6 +32,13 @@ const CatchAll = ({ deploy, params, plugin }) => {
         setDetailsKey(key)
       }
 
+      console.log('url-log:', { url });
+      console.log('key-log:', { key });
+      console.log('pKey-log:', { pKey });
+      console.log('method-log:', { method });
+      console.log('data-log:', { data });
+      console.log('message-log:', { message });
+
       if (pKey.startsWith('terminal')) return
       dispatch(
         pluginFetch({
@@ -53,6 +60,8 @@ const CatchAll = ({ deploy, params, plugin }) => {
 
   useEffect(() => {
 
+    console.log('useEffect 1-log');
+
     console.log('pKey-log:', { pKey });
     console.log('pp-log:', { pp });
     console.log('deploy-log:', { deploy });
@@ -70,6 +79,9 @@ const CatchAll = ({ deploy, params, plugin }) => {
   }, [dispatch, pKey, plugin.data, pp, deploy])
 
   useEffect(() => {
+
+    console.log('useEffect 2-log');
+
     return () =>
       pKey &&
       dispatch(
@@ -86,8 +98,11 @@ const CatchAll = ({ deploy, params, plugin }) => {
   if (
     ((!plugin.data[pKey] && plugin.loading) ||
       (!plugin.data[pKey] && !plugin.loading && !plugin.error)) &&
-    pp.type !== 'terminal'
+    pp.type !== 'terminal' && pp.type !== 'argoevents'
   ) {
+
+    console.log('return Loader');
+
     return <Loader />
   }
 
