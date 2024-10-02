@@ -53,10 +53,10 @@ const CatchAll = ({ deploy, params, plugin }) => {
 
   useEffect(() => {
 
-    console.log('pKey:', { pKey });
-    console.log('pp:', { pp });
-    console.log('deploy:', { deploy });
-    console.log('plugin:', { plugin });
+    console.log('pKey-log:', { pKey });
+    console.log('pp-log:', { pp });
+    console.log('deploy-log:', { deploy });
+    console.log('plugin-log:', { plugin });
 
     if (pKey.startsWith('terminal') || pp?.type === 'argoevents') return
     pKey &&
