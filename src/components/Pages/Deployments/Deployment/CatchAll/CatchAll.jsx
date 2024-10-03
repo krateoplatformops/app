@@ -185,13 +185,6 @@ const CatchAll = ({ deploy, params, plugin }) => {
           />
         )
       case 'argoevents':
-
-        console.log('Mounting ArgoEvents component with:', {
-          pluginValue: pp?.value,
-          deployName: deploy?.metadata?.name,
-          hasContent: !!plugin.data[pKey]
-        });
-
         return (
           <ArgoEvents
             plugin={pp}
