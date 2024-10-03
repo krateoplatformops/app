@@ -63,19 +63,6 @@ const CatchAll = ({ deploy, params, plugin }) => {
         message
       });
 
-<<<<<<< HEAD
-=======
-      if (pKey.startsWith('terminal')) return
-
-      console.log('Dispatching pluginFetch with:', {
-        method: method || 'get',
-        url,
-        dataKeys: data ? Object.keys(data) : null,
-        key,
-        message
-      });
-
->>>>>>> 75c92bc9c5a532073cc325448dec621809801d32
       dispatch(
         pluginFetch({
           method: method || 'get',
