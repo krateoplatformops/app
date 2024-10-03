@@ -96,7 +96,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
       hasPluginData: !!plugin.data[pKey]
     });
 
-    if (pKey.startsWith('terminal')) return
+    if (pKey.startsWith('terminal') || pKey.startsWith('argoevents')) return
 
     if (pKey && !plugin.data[pKey]) {
       const callUrl = pluginHelper.createCallUrl(pp, deploy)
@@ -136,7 +136,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
   if (
     ((!plugin.data[pKey] && plugin.loading) ||
       (!plugin.data[pKey] && !plugin.loading && !plugin.error)) &&
-    pp.type !== 'terminal' && pp.type !== 'argoevents'
+    pp.type !== 'terminal'
   ) {
 
     console.log('return Loader');
