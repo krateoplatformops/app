@@ -17,6 +17,13 @@ import Terminal from './Terminal/Terminal'
 import { pluginHelper } from '../../../../../helpers'
 
 const CatchAll = ({ deploy, params, plugin }) => {
+
+  console.log('CatchAll - Initial Render', {
+    deployName: deploy?.metadata?.name,
+    params,
+    pluginType: plugin?.type
+  });
+
   const dispatch = useDispatch()
   const [detailsKey, setDetailsKey] = useState('')
 
@@ -24,22 +31,38 @@ const CatchAll = ({ deploy, params, plugin }) => {
     (x) => x.name.replace(/\s/g, '-') === params['*']
   )
 
+  console.log('Found Plugin:', pp);
+
   const pKey = pp ? `${pp.type}-${pp.name}` : null
+
+  console.log('Generated pKey:', pKey);
 
   const detailsCallHandler = useCallback(
     ({ url, key, method, data, message }) => {
+
+      console.log('detailsCallHandler called with:', {
+        url,
+        key,
+        method,
+        data,
+        message,
+        pluginType: pp?.type
+      });
+
       if (key) {
         setDetailsKey(key)
       }
 
-      console.log('url-log:', { url });
-      console.log('key-log:', { key });
-      console.log('pKey-log:', { pKey });
-      console.log('method-log:', { method });
-      console.log('data-log:', { data });
-      console.log('message-log:', { message });
-
       if (pKey.startsWith('terminal')) return
+
+      console.log('Dispatching pluginFetch with:', {
+        method: method || 'get',
+        url,
+        dataKeys: data ? Object.keys(data) : null,
+        key,
+        message
+      });
+
       dispatch(
         pluginFetch({
           method: method || 'get',
@@ -60,22 +83,30 @@ const CatchAll = ({ deploy, params, plugin }) => {
 
   useEffect(() => {
 
-    console.log('useEffect 1-log');
-
-    console.log('pKey-log:', { pKey });
-    console.log('pp-log:', { pp });
-    console.log('deploy-log:', { deploy });
-    console.log('plugin-log:', { plugin });
+    console.log('First useEffect triggered', {
+      pKey,
+      ppType: pp?.type,
+      hasPluginData: !!plugin.data[pKey]
+    });
 
     if (pKey.startsWith('terminal')) return
-    pKey &&
-      !plugin.data[pKey] &&
+
+    if (pKey && !plugin.data[pKey]) {
+      const callUrl = pluginHelper.createCallUrl(pp, deploy)
+      console.log('Calling API in useEffect with:', {
+        url: callUrl,
+        pluginType: pp?.type,
+        deployName: deploy?.metadata?.name
+      });
+
       dispatch(
         pluginFetch({
-          url: pluginHelper.createCallUrl(pp, deploy),
+          url: callUrl,
           key: pKey
         })
       )
+    }    
+
   }, [dispatch, pKey, plugin.data, pp, deploy])
 
   useEffect(() => {
@@ -111,6 +142,12 @@ const CatchAll = ({ deploy, params, plugin }) => {
   }
 
   const mountPlugin = () => {
+
+    console.log('mountPlugin called', {
+      pluginType: pp?.type,
+      hasPluginData: !!plugin.data[pKey]
+    });
+
     switch (pp.type) {
       case 'doc':
         return <Documentation plugin={pp} content={plugin.data[pKey]} />
@@ -141,6 +178,13 @@ const CatchAll = ({ deploy, params, plugin }) => {
           />
         )
       case 'argoevents':
+
+        console.log('Mounting ArgoEvents component with:', {
+          pluginValue: pp?.value,
+          deployName: deploy?.metadata?.name,
+          hasContent: !!plugin.data[pKey]
+        });
+
         return (
           <ArgoEvents
             plugin={pp}
