@@ -5,6 +5,10 @@ import Label from '../../../../../UI/Label/Label'
 import { pluginHelper } from '../../../../../../helpers'
 
 const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
+
+  console.log('ArgoEvents component mounted');
+  console.log('Props:', { deploy, plugin, detailsCallHandler });
+
   const [stage, setStage] = useState('')
   const [version, setVersion] = useState('')
 
