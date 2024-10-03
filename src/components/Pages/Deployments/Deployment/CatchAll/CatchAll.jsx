@@ -53,6 +53,13 @@ const CatchAll = ({ deploy, params, plugin }) => {
         setDetailsKey(key)
       }
 
+      console.log('url-log:', { url });
+      console.log('key-log:', { key });
+      console.log('pKey-log:', { pKey });
+      console.log('method-log:', { method });
+      console.log('data-log:', { data });
+      console.log('message-log:', { message });
+
       if (pKey.startsWith('terminal')) return
 
       console.log('Dispatching pluginFetch with:', {
@@ -129,7 +136,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
   if (
     ((!plugin.data[pKey] && plugin.loading) ||
       (!plugin.data[pKey] && !plugin.loading && !plugin.error)) &&
-    pp.type !== 'terminal'
+    pp.type !== 'terminal' && pp.type !== 'argoevents'
   ) {
 
     console.log('return Loader');
