@@ -31,19 +31,35 @@ const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
 
     console.log('Prepared request data:', data);
 
-    const callUrl = pluginHelper.createCallUrl(plugin, deploy);
-    console.log('Created call URL:', callUrl);
+    // const callUrl = pluginHelper.createCallUrl(plugin, deploy);
+    // console.log('Created call URL:', callUrl);
 
-    detailsCallHandler({
-      // url: pluginHelper.createCallUrl(plugin, deploy),
-      url: data.repo_url,
-      method: 'post',
+    const response = await fetch(data.repo_url, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      data,
-      message: 'Argo Events sequence triggered successfully'
-    })
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('API call successful:', result);
+    alert('Argo Events sequence triggered successfully');
+
+    // detailsCallHandler({
+    //   // url: pluginHelper.createCallUrl(plugin, deploy),
+    //   url: data.repo_url,
+    //   method: 'post',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   data,
+    //   message: 'Argo Events sequence triggered successfully'
+    // })
 
     // Reset form
     setStage('')
