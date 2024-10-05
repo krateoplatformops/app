@@ -31,8 +31,12 @@ const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
 
     console.log('Prepared request data:', data);
 
+    const callUrl = pluginHelper.createCallUrl(plugin, deploy);
+    console.log('Created call URL:', callUrl);
+
     detailsCallHandler({
-      url: pluginHelper.createCallUrl(plugin, deploy),
+      // url: pluginHelper.createCallUrl(plugin, deploy),
+      url: data.repo_url,
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
