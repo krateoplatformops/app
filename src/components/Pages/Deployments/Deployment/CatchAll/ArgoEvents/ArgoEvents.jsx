@@ -18,6 +18,14 @@ const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
 
   const stages = ['test', 'coll', 'prod']
 
+  const KRATEO_DEPLOYMENT_NAME = deploy.metadata.name;
+  const KRATEO_ENDPOINT_BEARER_TOKEN = process.env.KRATEO_ENDPOINT_BEARER_TOKEN;
+  const KRATEO_ENDPOINT_TARGET_URL = process.env.KRATEO_ENDPOINT_TARGET_URL;
+
+  console.log('Deployment Name:', KRATEO_DEPLOYMENT_NAME);
+  console.log('Bearer Token:', KRATEO_ENDPOINT_BEARER_TOKEN);
+  console.log('Target URL:', KRATEO_ENDPOINT_TARGET_URL);
+
   const buttonHandler = () => {
     const deploymentName = deploy.metadata.name
 
@@ -34,42 +42,43 @@ const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
     // const callUrl = pluginHelper.createCallUrl(plugin, deploy);
     // console.log('Created call URL:', callUrl);
 
-    // fetch(data.repo_url, {
-    //   method: 'POST',
+    fetch(data.repo_url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${KRATEO_ENDPOINT_BEARER_TOKEN}`
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(result => {
+      console.log('API call successful:', result);
+      alert('Argo Events sequence triggered successfully');
+      
+      // Reset form
+      setStage('')
+      setVersion('')
+    })
+    .catch(error => {
+      console.error('Error making API call:', error);
+      alert('Error triggering Argo Events sequence. Check console for details.');
+    });
+
+    // detailsCallHandler({
+    //   // url: pluginHelper.createCallUrl(plugin, deploy),
+    //   url: data.repo_url,
+    //   method: 'post',
     //   headers: {
     //     'Content-Type': 'application/json'
     //   },
-    //   body: JSON.stringify(data)
+    //   data,
+    //   message: 'Argo Events sequence triggered successfully'
     // })
-    // .then(response => {
-    //   if (!response.ok) {
-    //     throw new Error(`HTTP error! status: ${response.status}`);
-    //   }
-    //   return response.json();
-    // })
-    // .then(result => {
-    //   console.log('API call successful:', result);
-    //   alert('Argo Events sequence triggered successfully');
-      
-    //   // Reset form
-    //   setStage('')
-    //   setVersion('')
-    // })
-    // .catch(error => {
-    //   console.error('Error making API call:', error);
-    //   alert('Error triggering Argo Events sequence. Check console for details.');
-    // });
-
-    detailsCallHandler({
-      // url: pluginHelper.createCallUrl(plugin, deploy),
-      url: data.repo_url,
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data,
-      message: 'Argo Events sequence triggered successfully'
-    })
 
     // Reset form
     setStage('')
