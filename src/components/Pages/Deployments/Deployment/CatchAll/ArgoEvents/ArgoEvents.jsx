@@ -4,10 +4,11 @@ import Follower from '../../../../../UI/Follower/Follower'
 import Label from '../../../../../UI/Label/Label'
 import { pluginHelper } from '../../../../../../helpers'
 
-const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
+//const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
+const ArgoEvents = ({ deploy, plugin }) => {
 
   console.log('ArgoEvents component mounted');
-  console.log('Props:', { deploy, plugin, detailsCallHandler });
+  console.log('Props:', { deploy, plugin });
 
   const [stage, setStage] = useState('')
   const [version, setVersion] = useState('')
