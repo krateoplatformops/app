@@ -7,7 +7,11 @@ import { pluginHelper } from '../../../../../../helpers'
 const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
 
   console.log('ArgoEvents component mounted');
-  console.log('Props:', { deploy, plugin });
+  console.log('Initial props:', { 
+    deployName: deploy?.metadata?.name,
+    pluginName: plugin?.name,
+    hasDetailsHandler: !!detailsCallHandler 
+  });
 
   const [stage, setStage] = useState('')
   const [version, setVersion] = useState('')
@@ -24,6 +28,8 @@ const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
       version: version,
       verbose: 'true'
     }
+
+    console.log('Prepared request data:', data);
 
     detailsCallHandler({
       url: pluginHelper.createCallUrl(plugin, deploy),
