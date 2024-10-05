@@ -4,11 +4,14 @@ import Follower from '../../../../../UI/Follower/Follower'
 import Label from '../../../../../UI/Label/Label'
 import { pluginHelper } from '../../../../../../helpers'
 
-//const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
-const ArgoEvents = ({ deploy, plugin }) => {
+const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
 
   console.log('ArgoEvents component mounted');
-  console.log('Props:', { deploy, plugin });
+  console.log('Initial props:', { 
+    deployName: deploy?.metadata?.name,
+    pluginName: plugin?.name,
+    hasDetailsHandler: !!detailsCallHandler 
+  });
 
   const [stage, setStage] = useState('')
   const [version, setVersion] = useState('')
@@ -26,15 +29,17 @@ const ArgoEvents = ({ deploy, plugin }) => {
       verbose: 'true'
     }
 
-    // detailsCallHandler({
-    //   url: pluginHelper.createCallUrl(plugin, deploy),
-    //   method: 'post',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   data,
-    //   message: 'Argo Events sequence triggered successfully'
-    // })
+    console.log('Prepared request data:', data);
+
+    detailsCallHandler({
+      url: pluginHelper.createCallUrl(plugin, deploy),
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data,
+      message: 'Argo Events sequence triggered successfully'
+    })
 
     // Reset form
     setStage('')
