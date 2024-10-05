@@ -129,7 +129,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
   if (
     ((!plugin.data[pKey] && plugin.loading) ||
       (!plugin.data[pKey] && !plugin.loading && !plugin.error)) &&
-    pp.type !== 'terminal'
+    pp.type !== 'terminal' && pp.type !== 'argoevents'
   ) {
 
     console.log('return Loader');
@@ -137,7 +137,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
     return <Loader />
   }
 
-  if (!plugin.data[pKey] && pp.type !== 'terminal') {
+  if (!plugin.data[pKey] && pp.type !== 'terminal' && pp.type !== 'argoevents') {
     return <Error message={plugin?.error?.response?.data?.message} />
   }
 
@@ -190,7 +190,7 @@ const CatchAll = ({ deploy, params, plugin }) => {
             plugin={pp}
             deploy={deploy}
             content={plugin.data[pKey]}
-            //detailsCallHandler={detailsCallHandler}
+            detailsCallHandler={detailsCallHandler}
           />
         )
       case 'codequality':
