@@ -26,15 +26,15 @@ const ArgoEvents = ({ deploy, plugin }) => {
       verbose: 'true'
     }
 
-    detailsCallHandler({
-      url: pluginHelper.createCallUrl(plugin, deploy),
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data,
-      message: 'Argo Events sequence triggered successfully'
-    })
+    // detailsCallHandler({
+    //   url: pluginHelper.createCallUrl(plugin, deploy),
+    //   method: 'post',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   data,
+    //   message: 'Argo Events sequence triggered successfully'
+    // })
 
     // Reset form
     setStage('')
