@@ -34,6 +34,32 @@ const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
     // const callUrl = pluginHelper.createCallUrl(plugin, deploy);
     // console.log('Created call URL:', callUrl);
 
+    // fetch(data.repo_url, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(data)
+    // })
+    // .then(response => {
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! status: ${response.status}`);
+    //   }
+    //   return response.json();
+    // })
+    // .then(result => {
+    //   console.log('API call successful:', result);
+    //   alert('Argo Events sequence triggered successfully');
+      
+    //   // Reset form
+    //   setStage('')
+    //   setVersion('')
+    // })
+    // .catch(error => {
+    //   console.error('Error making API call:', error);
+    //   alert('Error triggering Argo Events sequence. Check console for details.');
+    // });
+
     fetch(data.repo_url, {
       method: 'POST',
       headers: {
