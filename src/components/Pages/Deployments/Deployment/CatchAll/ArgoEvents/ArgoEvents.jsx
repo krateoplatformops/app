@@ -45,8 +45,7 @@ const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
     fetch(data.repo_url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${KRATEO_ENDPOINT_BEARER_TOKEN}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     })
@@ -74,7 +73,8 @@ const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
     //   url: data.repo_url,
     //   method: 'post',
     //   headers: {
-    //     'Content-Type': 'application/json'
+    //     'Content-Type': 'application/json',
+    //     'Authorization': `Bearer ${KRATEO_ENDPOINT_BEARER_TOKEN}`
     //   },
     //   data,
     //   message: 'Argo Events sequence triggered successfully'
