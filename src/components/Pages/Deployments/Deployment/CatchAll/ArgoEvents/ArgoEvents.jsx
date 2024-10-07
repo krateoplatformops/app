@@ -16,6 +16,7 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
 
   console.log('All environment variables:', process.env);
   console.log('Window env variables:', window.env);
+  console.log('Window runconfi variables:', window.runConfig);
 
   console.log('Props:', { deploy, plugin, content, detailsCallHandler });
 
@@ -25,31 +26,12 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
   const stages = ['test', 'coll', 'prod']
 
   console.log('uris:', uris );
-  console.log('argoevents endpoint uri:', `${uris.apiBase}/${uris.secret}/endpoint/argoevents` );
+  console.log('argoevents endpoint uri:', `${uris.apiBase}${uris.secret}/endpoint/argoevents` );
 
-  fetch(`${uris.apiBase}/${uris.secret}/endpoint/argoevents`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(result => {
-    console.log('API call successful for argoevents endpoint:', result);
-  })
-  .catch(error => {
-    console.error('Error making API call:', error);
-    alert('Error triggering GET for argoevents endpoint. Check console for details.');
-  });
-
+ 
   const KRATEO_DEPLOYMENT_NAME = deploy.metadata.name;
-  const KRATEO_ENDPOINT_BEARER_TOKEN = process.env.REACT_APP_KRATEO_ENDPOINT_BEARER_TOKEN;
-  const KRATEO_ENDPOINT_TARGET_URL = process.env.REACT_APP_KRATEO_ENDPOINT_TARGET_URL;
+  const KRATEO_ENDPOINT_BEARER_TOKEN = process.env.KRATEO_ENDPOINT_BEARER_TOKEN;
+  const KRATEO_ENDPOINT_TARGET_URL = process.env.KRATEO_ENDPOINT_TARGET_URL;
 
   console.log('Deployment Name:', KRATEO_DEPLOYMENT_NAME);
   console.log('Bearer Token:', KRATEO_ENDPOINT_BEARER_TOKEN);
