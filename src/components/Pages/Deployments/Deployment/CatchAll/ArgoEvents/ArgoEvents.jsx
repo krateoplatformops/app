@@ -4,7 +4,7 @@ import Follower from '../../../../../UI/Follower/Follower'
 import Label from '../../../../../UI/Label/Label'
 import { pluginHelper } from '../../../../../../helpers'
 
-const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
+const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
 
   console.log('ArgoEvents component mounted');
   console.log('Initial props:', { 
@@ -12,6 +12,11 @@ const ArgoEvents = ({ deploy, plugin, detailsCallHandler }) => {
     pluginName: plugin?.name,
     hasDetailsHandler: !!detailsCallHandler 
   });
+
+  console.log('All environment variables:', process.env);
+  console.log('Window env variables:', window.env);
+
+  console.log('Props:', { deploy, plugin, content, detailsCallHandler });
 
   const [stage, setStage] = useState('')
   const [version, setVersion] = useState('')
