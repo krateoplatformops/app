@@ -24,6 +24,8 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
 
   const stages = ['test', 'coll', 'prod']
 
+  console.log('uris:', uris });
+
   fetch(`${uris.secret}/endpoint/argoevents`, {
     method: 'GET',
     headers: {
