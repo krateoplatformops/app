@@ -30,8 +30,8 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
 
  
   const KRATEO_DEPLOYMENT_NAME = deploy.metadata.name;
-  const KRATEO_ENDPOINT_BEARER_TOKEN = process.env.KRATEO_ENDPOINT_BEARER_TOKEN;
-  const KRATEO_ENDPOINT_TARGET_URL = process.env.KRATEO_ENDPOINT_TARGET_URL;
+  const KRATEO_ENDPOINT_BEARER_TOKEN = window.runConfig.KRATEO_ENDPOINT_BEARER_TOKEN;
+  const KRATEO_ENDPOINT_TARGET_URL = window.runConfig.KRATEO_ENDPOINT_TARGET_URL;
 
   console.log('Deployment Name:', KRATEO_DEPLOYMENT_NAME);
   console.log('Bearer Token:', KRATEO_ENDPOINT_BEARER_TOKEN);
@@ -56,7 +56,8 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
     fetch(KRATEO_ENDPOINT_TARGET_URL, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${KRATEO_ENDPOINT_BEARER_TOKEN}`
       },
       body: JSON.stringify(data)
     })
