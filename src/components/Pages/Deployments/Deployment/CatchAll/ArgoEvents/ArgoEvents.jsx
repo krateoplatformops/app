@@ -53,6 +53,8 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
     // const callUrl = pluginHelper.createCallUrl(plugin, deploy);
     // console.log('Created call URL:', callUrl);
 
+    console.log('Target URL inside buttonHandler:', KRATEO_ENDPOINT_TARGET_URL);
+
     fetch(KRATEO_ENDPOINT_TARGET_URL, {
       method: 'POST',
       headers: {
