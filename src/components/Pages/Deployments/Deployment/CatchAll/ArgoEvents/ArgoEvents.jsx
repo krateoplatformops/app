@@ -24,7 +24,7 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
 
   const stages = ['test', 'coll', 'prod']
 
-  console.log('uris:', uris });
+  console.log('uris:', uris );
 
   fetch(`${uris.secret}/endpoint/argoevents`, {
     method: 'GET',
@@ -47,8 +47,8 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
   });
 
   const KRATEO_DEPLOYMENT_NAME = deploy.metadata.name;
-  const KRATEO_ENDPOINT_BEARER_TOKEN = process.env.KRATEO_ENDPOINT_BEARER_TOKEN;
-  const KRATEO_ENDPOINT_TARGET_URL = process.env.KRATEO_ENDPOINT_TARGET_URL;
+  const KRATEO_ENDPOINT_BEARER_TOKEN = process.env.REACT_APP_KRATEO_ENDPOINT_BEARER_TOKEN;
+  const KRATEO_ENDPOINT_TARGET_URL = process.env.REACT_APP_KRATEO_ENDPOINT_TARGET_URL;
 
   console.log('Deployment Name:', KRATEO_DEPLOYMENT_NAME);
   console.log('Bearer Token:', KRATEO_ENDPOINT_BEARER_TOKEN);
