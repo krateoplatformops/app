@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import Card from '../../../../../UI/Card/Card'
 import Follower from '../../../../../UI/Follower/Follower'
 import Label from '../../../../../UI/Label/Label'
-import { pluginHelper } from '../../../../../../helpers'
+//import { pluginHelper } from '../../../../../../helpers'
+import uris from '../../../../../../uris'
 
 const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
 
@@ -22,6 +23,26 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
   const [version, setVersion] = useState('')
 
   const stages = ['test', 'coll', 'prod']
+
+  fetch(`${uris.secret}/endpoint/argoevents`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(result => {
+    console.log('API call successful for argoevents endpoint:', result);
+  })
+  .catch(error => {
+    console.error('Error making API call:', error);
+    alert('Error triggering GET for argoevents endpoint. Check console for details.');
+  });
 
   const KRATEO_DEPLOYMENT_NAME = deploy.metadata.name;
   const KRATEO_ENDPOINT_BEARER_TOKEN = process.env.REACT_APP_KRATEO_ENDPOINT_BEARER_TOKEN;
