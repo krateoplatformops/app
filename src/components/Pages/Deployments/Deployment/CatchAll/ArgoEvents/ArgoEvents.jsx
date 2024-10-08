@@ -57,6 +57,7 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
 
     fetch(KRATEO_ENDPOINT_TARGET_URL, {
       method: 'POST',
+      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${KRATEO_ENDPOINT_BEARER_TOKEN}`
