@@ -4,7 +4,6 @@ import Follower from '../../../../../UI/Follower/Follower'
 import Label from '../../../../../UI/Label/Label'
 //import { pluginHelper } from '../../../../../../helpers'
 import uris from '../../../../../../uris'
-import axios from 'axios';
 
 const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
 
@@ -56,26 +55,33 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
 
     console.log('Target URL inside buttonHandler:', KRATEO_ENDPOINT_TARGET_URL);
 
-    try {
-      const response = await axios({
-        method: 'post',
-        url: KRATEO_ENDPOINT_TARGET_URL,
-        headers: {
-          'Authorization': `Bearer ${KRATEO_ENDPOINT_BEARER_TOKEN}`
-        },
-        data: data
-      });
-      
-      console.log('API call successful:', response.data);
+    fetch(KRATEO_ENDPOINT_TARGET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${KRATEO_ENDPOINT_BEARER_TOKEN}`
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(result => {
+      console.log('API call successful:', result);
       alert('Argo Events sequence triggered successfully');
       
       // Reset form
-      setStage('');
-      setVersion('');
-    } catch (error) {
+      setStage('')
+      setVersion('')
+    })
+    .catch(error => {
       console.error('Error making API call:', error);
       alert('Error triggering Argo Events sequence. Check console for details.');
-    }
+    });
 
     // detailsCallHandler({
     //   // url: pluginHelper.createCallUrl(plugin, deploy),
