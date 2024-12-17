@@ -57,7 +57,6 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
 
     fetch(KRATEO_ENDPOINT_TARGET_URL, {
       method: 'POST',
-      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${KRATEO_ENDPOINT_BEARER_TOKEN}`
@@ -65,7 +64,7 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
       body: JSON.stringify(data)
     })
     .then(response => {
-      if (!response.ok) {
+      if (response !== "success") {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json();
@@ -104,7 +103,7 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
     <ul className="ul-double-view">
       <li className="li-menu">
         <Follower>
-          <Card title="Argo Events">
+          <Card title="Promozione">
             <Label title="Stage">
               <select 
                 value={stage} 
@@ -121,7 +120,7 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
             <Label title="Version">
               <input
                 type="text"
-                placeholder="Docker image or version number"
+                placeholder="{instance1,...,instanceN|*:}tag"
                 value={version}
                 onChange={(e) => setVersion(e.target.value)}
               />
