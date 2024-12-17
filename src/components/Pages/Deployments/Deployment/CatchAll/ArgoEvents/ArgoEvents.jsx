@@ -64,7 +64,7 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
       body: JSON.stringify(data)
     })
     .then(response => {
-      if (response !== "success") {
+      if (response.status !== 200) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json();
