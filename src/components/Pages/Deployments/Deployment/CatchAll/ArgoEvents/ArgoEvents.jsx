@@ -67,12 +67,11 @@ const ArgoEvents = ({ deploy, plugin, content, detailsCallHandler }) => {
       if (response.status !== 200) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      return response.json();
     })
     .then(result => {
       console.log('API call successful:', result);
       alert('Argo Events sequence triggered successfully');
-      
+
       // Reset form
       setStage('')
       setVersion('')
